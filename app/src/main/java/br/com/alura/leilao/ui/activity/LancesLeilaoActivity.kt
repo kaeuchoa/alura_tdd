@@ -8,15 +8,13 @@ import kotlinx.android.synthetic.main.activity_lances_leilao.*
 
 class LancesLeilaoActivity : AppCompatActivity() {
 
-    private val txtDescricao = lances_leilao_descricao
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lances_leilao)
         val dadosRecebidos = intent
         if (dadosRecebidos.hasExtra("leilao")) {
             val leilao = dadosRecebidos.getSerializableExtra("leilao") as Leilao
-            txtDescricao.text = leilao.descricao
+            lances_leilao_descricao.text = leilao.descricao
         }
     }
 }
