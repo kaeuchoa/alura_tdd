@@ -34,16 +34,21 @@ class ListaLeilaoAdapter(private val context: Context, private val leiloes: List
 
    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val txtDescricao: TextView  by lazy {
+        private val txtDescricao: TextView by lazy {
             itemView.setOnClickListener { onItemClickListener?.onItemClick(leilao) }
             itemView.item_leilao_descricao
         }
+
+       private val txtMaiorLance: TextView by lazy {
+           itemView.item_leilao_maior_lance
+       }
 
         private lateinit var leilao: Leilao
 
         fun vincula(leilao: Leilao) {
             this.leilao = leilao
             txtDescricao.text = leilao.descricao
+            txtMaiorLance.text = leilao.maiorLance.toString()
         }
 
     }

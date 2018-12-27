@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import br.com.alura.leilao.R
+import br.com.alura.leilao.model.Lance
 import br.com.alura.leilao.model.Leilao
+import br.com.alura.leilao.model.Usuario
 import br.com.alura.leilao.ui.recyclerview.adapter.ListaLeilaoAdapter
 import kotlinx.android.synthetic.main.activity_lista_leilao.*
 
@@ -29,7 +31,10 @@ class ListaLeilaoActivity : AppCompatActivity() {
     }
 
     private fun leiloesDeExemplo(): List<Leilao> {
-        return listOf(Leilao("Console"))
+        val console = Leilao("Console")
+        console.propoe(Lance(Usuario("Teste1"),200.0))
+        console.propoe(Lance(Usuario("Teste2"),300.0))
+        return listOf(console)
     }
 }
 

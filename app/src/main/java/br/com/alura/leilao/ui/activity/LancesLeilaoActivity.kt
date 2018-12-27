@@ -15,6 +15,8 @@ class LancesLeilaoActivity : AppCompatActivity() {
         if (dadosRecebidos.hasExtra("leilao")) {
             val leilao = dadosRecebidos.getSerializableExtra("leilao") as Leilao
             lances_leilao_descricao.text = leilao.descricao
+            lances_leilao_maior_lance.text = leilao.maiorLance.toString()
+            lances_leilao_menor_lance.text = leilao.menorLance.toString()
         }
     }
 }
