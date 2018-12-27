@@ -14,12 +14,18 @@ class Leilao(val descricao: String) : Serializable {
 
     fun propoe(lance: Lance){
         val valorDoLance = lance.valor
-        if(valorDoLance > maiorLance)
-            maiorLance = valorDoLance
+        calculaMaiorLance(valorDoLance)
+        calculaMenorLance(valorDoLance)
+    }
 
-        if(valorDoLance < menorLance)
+    private fun calculaMenorLance(valorDoLance: Double) {
+        if (valorDoLance < menorLance)
             menorLance = valorDoLance
+    }
 
+    private fun calculaMaiorLance(valorDoLance: Double) {
+        if (valorDoLance > maiorLance)
+            maiorLance = valorDoLance
     }
 
 }
