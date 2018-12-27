@@ -17,7 +17,6 @@ class Leilao(val descricao: String) : Serializable {
         if(valorDoLance > maiorLance)
             maiorLance = valorDoLance
 
-
         if(valorDoLance < menorLance)
             menorLance = valorDoLance
 
