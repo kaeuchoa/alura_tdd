@@ -3,7 +3,6 @@ package br.com.alura.leilao.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import br.com.alura.leilao.R
 import br.com.alura.leilao.model.Lance
 import br.com.alura.leilao.model.Leilao
@@ -31,10 +30,20 @@ class ListaLeilaoActivity : AppCompatActivity() {
     }
 
     private fun leiloesDeExemplo(): List<Leilao> {
-        val console = Leilao("Console")
-        console.propoe(Lance(Usuario("Teste1"),200.0))
-        console.propoe(Lance(Usuario("Teste2"),300.0))
-        return listOf(console)
+        val leilaoConsole = Leilao("Console")
+        leilaoConsole.propoe(Lance(Usuario("Teste1"),200.0))
+        leilaoConsole.propoe(Lance(Usuario("Teste2"),300.0))
+
+        val leilaoCarro = Leilao("Carro")
+        leilaoCarro.propoe(Lance(Usuario("Teste2"),300.0))
+        leilaoCarro.propoe(Lance(Usuario("Teste1"),400.0))
+        leilaoCarro.propoe(Lance(Usuario("Teste2"),600.0))
+        leilaoCarro.propoe(Lance(Usuario("Teste1"),800.0))
+
+        val leilaoComputador = Leilao("Computador")
+        leilaoComputador.propoe(Lance(Usuario("Teste1"),100.0))
+
+        return listOf(leilaoConsole, leilaoCarro, leilaoComputador)
     }
 }
 

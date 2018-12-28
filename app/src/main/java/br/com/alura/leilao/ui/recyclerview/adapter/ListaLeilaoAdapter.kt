@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import br.com.alura.leilao.R
+import br.com.alura.leilao.extensions.formataParaDinheiro
 import br.com.alura.leilao.model.Leilao
 import kotlinx.android.synthetic.main.item_leilao.view.*
 
@@ -48,7 +49,7 @@ class ListaLeilaoAdapter(private val context: Context, private val leiloes: List
         fun vincula(leilao: Leilao) {
             this.leilao = leilao
             txtDescricao.text = leilao.descricao
-            txtMaiorLance.text = leilao.maiorLance.toString()
+            txtMaiorLance.text = leilao.maiorLance.formataParaDinheiro()
         }
 
     }
