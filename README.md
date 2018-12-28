@@ -1,4 +1,4 @@
-Alura - Curso Android parte 1: Testes automatizados e TDD
+Alura - Curso "Android parte 1: Testes automatizados e TDD"
 <hr>
 Código desenvolvido com base nas aulas do curso da plataforma de ensino online "Alura": 
 
