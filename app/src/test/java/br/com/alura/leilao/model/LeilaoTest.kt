@@ -32,15 +32,6 @@ class LeilaoTest {
         assertEquals(300.0, maiorLance, DELTA)
     }
 
-    @Test
-    fun When_RecebeLancesOrdemDecrescente_Expect_MaiorLance(){
-        val usuarioTeste2 = Usuario ("teste2")
-        leilao.propoe(Lance(usuarioTeste1,300.0))
-        leilao.propoe(Lance(usuarioTeste2,200.0))
-        val maiorLance = leilao.maiorLance
-        assertEquals(300.0, maiorLance, DELTA)
-    }
-
     /*Testes getMenorLance()*/
     @Test
     fun When_RecebeUnicoLance_Expect_MenorLance(){
@@ -54,15 +45,6 @@ class LeilaoTest {
         val usuarioTeste2 = Usuario ("teste2")
         leilao.propoe(Lance(usuarioTeste1,200.0))
         leilao.propoe(Lance(usuarioTeste2,300.0))
-        val menorLance = leilao.menorLance
-        assertEquals(200.0, menorLance, DELTA)
-    }
-
-    @Test
-    fun When_RecebeLancesOrdemDecrescente_Expect_MenorLance(){
-        val usuarioTeste2 = Usuario ("teste2")
-        leilao.propoe(Lance(usuarioTeste1,300.0))
-        leilao.propoe(Lance(usuarioTeste2,200.0))
         val menorLance = leilao.menorLance
         assertEquals(200.0, menorLance, DELTA)
     }
@@ -100,8 +82,8 @@ class LeilaoTest {
 
     @Test
     fun When_RecebeDoisLances_Expect_TresMaioresLances(){
-        leilao.propoe(Lance(usuarioTeste1, 200.0))
         leilao.propoe(Lance(Usuario("Teste2"), 100.0))
+        leilao.propoe(Lance(usuarioTeste1, 200.0))
 
         val tresMaioresLances = leilao.tresMaioresLances()
 
@@ -117,14 +99,14 @@ class LeilaoTest {
         leilao.propoe(Lance(usuarioTeste1, 100.0))
         leilao.propoe(Lance(usuarioTeste2, 300.0))
         leilao.propoe(Lance(usuarioTeste1, 500.0))
-        leilao.propoe(Lance(usuarioTeste2, 200.0))
+        leilao.propoe(Lance(usuarioTeste2, 600.0))
 
         val tresMaioresLances = leilao.tresMaioresLances()
 
         assertEquals(3, tresMaioresLances.size)
-        assertEquals(500.0, tresMaioresLances[0].valor, DELTA)
-        assertEquals(300.0, tresMaioresLances[1].valor, DELTA)
-        assertEquals(200.0, tresMaioresLances[2].valor, DELTA)
+        assertEquals(600.0, tresMaioresLances[0].valor, DELTA)
+        assertEquals(500.0, tresMaioresLances[1].valor, DELTA)
+        assertEquals(300.0, tresMaioresLances[2].valor, DELTA)
 
         leilao.propoe(Lance(usuarioTeste1, 700.0))
 
@@ -132,10 +114,33 @@ class LeilaoTest {
 
         assertEquals(3, tresMaioresLancesNovo.size)
         assertEquals(700.0, tresMaioresLancesNovo[0].valor, DELTA)
-        assertEquals(500.0, tresMaioresLancesNovo[1].valor, DELTA)
-        assertEquals(300.0, tresMaioresLancesNovo[2].valor, DELTA)
+        assertEquals(600.0, tresMaioresLancesNovo[1].valor, DELTA)
+        assertEquals(500.0, tresMaioresLancesNovo[2].valor, DELTA)
     }
 
+    @Test
+    fun When_RecebeNenhumLance_Expect_MaiorLanceZero(){
+        val maiorLance = leilao.maiorLance
+        assertEquals(0.0, maiorLance, DELTA)
+    }
+
+    @Test
+    fun When_RecebeNenhumLance_Expect_MenorLanceZero(){
+        val menorLance = leilao.menorLance
+
+        assertEquals(0.0, menorLance, DELTA)
+    }
+
+
+    @Test
+    fun When_RecebeLanceMenorQueMaior_Expect_Rejeitar(){
+        leilao.propoe(Lance(usuarioTeste1, 500.0))
+        leilao.propoe(Lance(Usuario("Teste2"), 300.0))
+
+        val quantidadeLances = leilao.quantidadeLances
+
+        assertEquals(1, quantidadeLances)
+    }
 
 
 }
