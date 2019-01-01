@@ -1,5 +1,6 @@
 package br.com.alura.leilao.model
 
+import br.com.alura.leilao.builders.LeilaoBuilder
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -153,21 +154,24 @@ class LeilaoTest {
 
     @Test
     fun When_RecebeCincoLancesDoMesmoUsuario_Expect_Rejeitar(){
-        val usuarioTeste2 = Usuario("teste2")
-        leilao.propoe(Lance(usuarioTeste1, 100.0))
-        leilao.propoe(Lance(usuarioTeste2, 120.0))
-        leilao.propoe(Lance(usuarioTeste1, 130.0))
-        leilao.propoe(Lance(usuarioTeste2, 140.0))
-        leilao.propoe(Lance(usuarioTeste1, 150.0))
-        leilao.propoe(Lance(usuarioTeste2, 160.0))
-        leilao.propoe(Lance(usuarioTeste1, 170.0))
-        leilao.propoe(Lance(usuarioTeste2, 180.0))
-        leilao.propoe(Lance(usuarioTeste1, 190.0))
-        leilao.propoe(Lance(usuarioTeste2, 200.0))
-        leilao.propoe(Lance(usuarioTeste1, 210.0))
-        leilao.propoe(Lance(usuarioTeste2, 220.0))
 
-        val quantidadeLances = leilao.quantidadeLances
+        val usuarioTeste2 = Usuario("teste2")
+        val console = LeilaoBuilder("console")
+                .lance(usuarioTeste1, 100.0)
+                .lance(usuarioTeste2, 120.0)
+                .lance(usuarioTeste1, 130.0)
+                .lance(usuarioTeste2, 140.0)
+                .lance(usuarioTeste1, 150.0)
+                .lance(usuarioTeste2, 160.0)
+                .lance(usuarioTeste1, 170.0)
+                .lance(usuarioTeste2, 180.0)
+                .lance(usuarioTeste1, 190.0)
+                .lance(usuarioTeste2, 200.0)
+                .lance(usuarioTeste1, 210.0)
+                .lance(usuarioTeste2, 220.0)
+                .build()
+
+        val quantidadeLances = console.quantidadeLances
 
         assertEquals(10, quantidadeLances)
     }
