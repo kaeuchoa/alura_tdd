@@ -1,6 +1,9 @@
 package br.com.alura.leilao.model
 
 import br.com.alura.leilao.builders.LeilaoBuilder
+import br.com.alura.leilao.exceptions.LanceMenorQueUltimoException
+import br.com.alura.leilao.exceptions.UsuarioIgualUltimoLanceException
+import br.com.alura.leilao.exceptions.UsuarioTemCincoLancesException
 import br.com.alura.leilao.utils.Const
 import org.junit.Test
 
@@ -135,32 +138,19 @@ class LeilaoTest {
     }
 
 
-    @Test
+    @Test(expected = LanceMenorQueUltimoException::class)
     fun When_RecebeLanceMenorQueMaior_Expect_Rejeitar(){
         leilao.propoe(Lance(usuarioTeste1, 500.0))
-        try{
-            leilao.propoe(Lance(Usuario("Teste2"), 300.0))
-            fail("Era esperada uma RuntimeException")
-        }catch (e : RuntimeException){
-            assertEquals(Const.Exceptions.LANCE_MENOR_QUE_MAIOR_LANCE, e.message)
-        }
-
-
+        leilao.propoe(Lance(Usuario("Teste2"), 300.0))
     }
 
-    @Test
+    @Test(expected = UsuarioIgualUltimoLanceException::class)
     fun When_RecebeLanceDoMesmoUsuario_Expect_Reijeitar(){
         leilao.propoe(Lance(usuarioTeste1, 500.0))
-        try {
-            leilao.propoe(Lance(Usuario("teste1"), 600.0))
-            fail("Era esperada uma RuntimeException")
-        }catch (e: RuntimeException){
-            assertEquals(Const.Exceptions.USUARIO_IGUAL_ULTIMO_LANCE, e.message)
-        }
-
+        leilao.propoe(Lance(Usuario("teste1"), 600.0))
     }
 
-    @Test
+    @Test(expected = UsuarioTemCincoLancesException::class)
     fun When_RecebeCincoLancesDoMesmoUsuario_Expect_Rejeitar(){
 
         val usuarioTeste2 = Usuario("teste2")
@@ -175,14 +165,7 @@ class LeilaoTest {
                 .lance(usuarioTeste2, 180.0)
                 .lance(usuarioTeste1, 190.0)
                 .lance(usuarioTeste2, 200.0)
-        try {
-            leilao.lance(usuarioTeste1,210.0)
-            fail("Era esperada uma RuntimeException")
-        }catch (e : RuntimeException){
-            assertEquals(Const.Exceptions.USUARIO_TEM_CINCO_LANCES, e.message)
-        }
-
-
+                .lance(usuarioTeste1,210.0)
     }
 
 
