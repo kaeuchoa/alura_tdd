@@ -142,5 +142,35 @@ class LeilaoTest {
         assertEquals(1, quantidadeLances)
     }
 
+    @Test
+    fun When_RecebeLanceDoMesmoUsuario_Expect_Reijeitar(){
+        leilao.propoe(Lance(usuarioTeste1, 500.0))
+        leilao.propoe(Lance(Usuario("teste1"), 600.0))
+
+        val quantidadeLances = leilao.quantidadeLances
+        assertEquals(1, quantidadeLances)
+    }
+
+    @Test
+    fun When_RecebeCincoLancesDoMesmoUsuario_Expect_Rejeitar(){
+        val usuarioTeste2 = Usuario("teste2")
+        leilao.propoe(Lance(usuarioTeste1, 100.0))
+        leilao.propoe(Lance(usuarioTeste2, 120.0))
+        leilao.propoe(Lance(usuarioTeste1, 130.0))
+        leilao.propoe(Lance(usuarioTeste2, 140.0))
+        leilao.propoe(Lance(usuarioTeste1, 150.0))
+        leilao.propoe(Lance(usuarioTeste2, 160.0))
+        leilao.propoe(Lance(usuarioTeste1, 170.0))
+        leilao.propoe(Lance(usuarioTeste2, 180.0))
+        leilao.propoe(Lance(usuarioTeste1, 190.0))
+        leilao.propoe(Lance(usuarioTeste2, 200.0))
+        leilao.propoe(Lance(usuarioTeste1, 210.0))
+        leilao.propoe(Lance(usuarioTeste2, 220.0))
+
+        val quantidadeLances = leilao.quantidadeLances
+
+        assertEquals(10, quantidadeLances)
+    }
+
 
 }

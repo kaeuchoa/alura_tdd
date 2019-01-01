@@ -14,19 +14,60 @@ class Leilao(val descricao: String) : Serializable {
 
 
     fun propoe(lance: Lance) {
-        val valorDoLance = lance.valor
-        if(maiorLance > valorDoLance)
-            return
+        if (lanceNaoValido(lance)) return
 
+        val valorDoLance = lance.valor
         lances.add(lance)
-        if (lances.size == 1) {
-            maiorLance = valorDoLance
-            menorLance = valorDoLance
-            return
-        }
+        if (configuraMaiorEMenorLance(valorDoLance)) return
         lances.sort()
         calculaMaiorLance(valorDoLance)
         calculaMenorLance(valorDoLance)
+    }
+
+    private fun configuraMaiorEMenorLance(valorDoLance: Double): Boolean {
+        if (lances.size == 1) {
+            maiorLance = valorDoLance
+            menorLance = valorDoLance
+            return true
+        }
+        return false
+    }
+
+    private fun lanceNaoValido(lance: Lance): Boolean {
+        val valorDoLance = lance.valor
+        if (lanceMenorQueUltimoLance(valorDoLance)) return true
+        val temLances = !lances.isEmpty()
+        if (temLances) {
+            if (usuarioIgualUltimoUsuario(lance)) return true
+            if (usuarioTemCincoLances(lance)) return true
+        }
+        return false
+    }
+
+    private fun usuarioTemCincoLances(lance: Lance): Boolean {
+        var contadorLances = 0
+        for (l in lances) {
+            val usuarioAtual = l.usuario
+            if (usuarioAtual.equals(lance.usuario))
+                contadorLances++
+
+            if (contadorLances == 5)
+                return true
+        }
+        return false
+    }
+
+    private fun usuarioIgualUltimoUsuario(lance: Lance): Boolean {
+        if (lance.usuario.equals(lances[0].usuario)) {
+            return true
+        }
+        return false
+    }
+
+    private fun lanceMenorQueUltimoLance(valorDoLance: Double): Boolean {
+        if (maiorLance > valorDoLance)
+            return true
+        return false
     }
 
     private fun calculaMenorLance(valorDoLance: Double) {
