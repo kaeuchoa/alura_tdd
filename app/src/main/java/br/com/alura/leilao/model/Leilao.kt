@@ -17,21 +17,24 @@ class Leilao(val descricao: String) : Serializable {
 
 
     fun propoe(lance: Lance) {
-        if (lanceNaoValido(lance)) return
-
+        validaLance(lance)
         val valorDoLance = lance.valor
         lances.add(lance)
+        if (configuraMaiorEMenorLance(valorDoLance)) return
+        lances.sort()
+        calculaMaiorLance(valorDoLance)
+    }
+
+    private fun configuraMaiorEMenorLance(valorDoLance: Double): Boolean {
         if (lances.size == 1) {
             maiorLance = valorDoLance
             menorLance = valorDoLance
-            return
+            return true
         }
-        lances.sort()
-        calculaMaiorLance(valorDoLance)
-        calculaMenorLance(valorDoLance)
+        return false
     }
 
-    private fun lanceNaoValido(lance: Lance): Boolean {
+    private fun validaLance(lance: Lance) {
         val valorDoLance = lance.valor
         if (lanceMenorQueUltimoLance(valorDoLance)) throw LanceMenorQueUltimoException()
         val temLances = !lances.isEmpty()
@@ -39,7 +42,6 @@ class Leilao(val descricao: String) : Serializable {
             if (usuarioIgualUltimoUsuario(lance)) throw UsuarioIgualUltimoLanceException()
             if (usuarioTemCincoLances(lance)) throw UsuarioTemCincoLancesException()
         }
-        return false
     }
 
     private fun usuarioTemCincoLances(lance: Lance): Boolean {
