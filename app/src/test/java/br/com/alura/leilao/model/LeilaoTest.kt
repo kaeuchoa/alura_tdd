@@ -1,9 +1,11 @@
 package br.com.alura.leilao.model
 
 import br.com.alura.leilao.builders.LeilaoBuilder
+import br.com.alura.leilao.utils.Const
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.lang.RuntimeException
 
 class LeilaoTest {
     private val leilao = Leilao("Console");
@@ -136,27 +138,33 @@ class LeilaoTest {
     @Test
     fun When_RecebeLanceMenorQueMaior_Expect_Rejeitar(){
         leilao.propoe(Lance(usuarioTeste1, 500.0))
-        leilao.propoe(Lance(Usuario("Teste2"), 300.0))
+        try{
+            leilao.propoe(Lance(Usuario("Teste2"), 300.0))
+            fail("Era esperada uma RuntimeException")
+        }catch (e : RuntimeException){
+            assertEquals(Const.Exceptions.LANCE_MENOR_QUE_MAIOR_LANCE, e.message)
+        }
 
-        val quantidadeLances = leilao.quantidadeLances
 
-        assertEquals(1, quantidadeLances)
     }
 
     @Test
     fun When_RecebeLanceDoMesmoUsuario_Expect_Reijeitar(){
         leilao.propoe(Lance(usuarioTeste1, 500.0))
-        leilao.propoe(Lance(Usuario("teste1"), 600.0))
+        try {
+            leilao.propoe(Lance(Usuario("teste1"), 600.0))
+            fail("Era esperada uma RuntimeException")
+        }catch (e: RuntimeException){
+            assertEquals(Const.Exceptions.USUARIO_IGUAL_ULTIMO_LANCE, e.message)
+        }
 
-        val quantidadeLances = leilao.quantidadeLances
-        assertEquals(1, quantidadeLances)
     }
 
     @Test
     fun When_RecebeCincoLancesDoMesmoUsuario_Expect_Rejeitar(){
 
         val usuarioTeste2 = Usuario("teste2")
-        val console = LeilaoBuilder("console")
+        val leilao = LeilaoBuilder("console")
                 .lance(usuarioTeste1, 100.0)
                 .lance(usuarioTeste2, 120.0)
                 .lance(usuarioTeste1, 130.0)
@@ -167,13 +175,14 @@ class LeilaoTest {
                 .lance(usuarioTeste2, 180.0)
                 .lance(usuarioTeste1, 190.0)
                 .lance(usuarioTeste2, 200.0)
-                .lance(usuarioTeste1, 210.0)
-                .lance(usuarioTeste2, 220.0)
-                .build()
+        try {
+            leilao.lance(usuarioTeste1,210.0)
+            fail("Era esperada uma RuntimeException")
+        }catch (e : RuntimeException){
+            assertEquals(Const.Exceptions.USUARIO_TEM_CINCO_LANCES, e.message)
+        }
 
-        val quantidadeLances = console.quantidadeLances
 
-        assertEquals(10, quantidadeLances)
     }
 
 

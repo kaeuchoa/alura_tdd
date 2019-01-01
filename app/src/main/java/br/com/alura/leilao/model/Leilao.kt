@@ -1,6 +1,8 @@
 package br.com.alura.leilao.model
 
+import br.com.alura.leilao.utils.Const
 import java.io.Serializable
+import java.lang.RuntimeException
 import java.util.*
 
 class Leilao(val descricao: String) : Serializable {
@@ -18,19 +20,14 @@ class Leilao(val descricao: String) : Serializable {
 
         val valorDoLance = lance.valor
         lances.add(lance)
-        if (configuraMaiorEMenorLance(valorDoLance)) return
-        lances.sort()
-        calculaMaiorLance(valorDoLance)
-        calculaMenorLance(valorDoLance)
-    }
-
-    private fun configuraMaiorEMenorLance(valorDoLance: Double): Boolean {
         if (lances.size == 1) {
             maiorLance = valorDoLance
             menorLance = valorDoLance
-            return true
+            return
         }
-        return false
+        lances.sort()
+        calculaMaiorLance(valorDoLance)
+        calculaMenorLance(valorDoLance)
     }
 
     private fun lanceNaoValido(lance: Lance): Boolean {
@@ -52,21 +49,21 @@ class Leilao(val descricao: String) : Serializable {
                 contadorLances++
 
             if (contadorLances == 5)
-                return true
+                throw RuntimeException(Const.Exceptions.USUARIO_TEM_CINCO_LANCES)
         }
         return false
     }
 
     private fun usuarioIgualUltimoUsuario(lance: Lance): Boolean {
         if (lance.usuario.equals(lances[0].usuario)) {
-            return true
+            throw RuntimeException(Const.Exceptions.USUARIO_IGUAL_ULTIMO_LANCE)
         }
         return false
     }
 
     private fun lanceMenorQueUltimoLance(valorDoLance: Double): Boolean {
         if (maiorLance > valorDoLance)
-            return true
+            throw RuntimeException(Const.Exceptions.LANCE_MENOR_QUE_MAIOR_LANCE)
         return false
     }
 
