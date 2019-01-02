@@ -7,41 +7,62 @@ import java.io.Serializable
 import java.util.*
 
 class Leilao(val descricao: String) : Serializable {
+
+    val id: Long = 0L
     private val lances: ArrayList<Lance> = ArrayList()
-    var maiorLance: Double = 0.0
-    var menorLance: Double = 0.0
+    val maiorLance: Double
+        get() {
+            if (lances.isEmpty())
+                return 0.0
+
+            return lances[0].valor
+        }
+    val menorLance: Double
+        get() {
+            if (lances.isEmpty())
+                return 0.0
+
+            return lances[lances.size - 1].valor
+        }
+
+
     val quantidadeLances: Int
         get() {
             return this.lances.size
         }
 
+    val tresMaioresLances: List<Lance>
+        get() {
+            val tamanhoMaximo = if (lances.size > 3) {
+                3
+            } else {
+                lances.size
+            }
+            return lances.subList(0, tamanhoMaximo)
+        }
+
 
     fun propoe(lance: Lance) {
         validaLance(lance)
-        val valorDoLance = lance.valor
         lances.add(lance)
-        if (configuraMaiorEMenorLance(valorDoLance)) return
         lances.sort()
-        calculaMaiorLance(valorDoLance)
-    }
-
-    private fun configuraMaiorEMenorLance(valorDoLance: Double): Boolean {
-        if (lances.size == 1) {
-            maiorLance = valorDoLance
-            menorLance = valorDoLance
-            return true
-        }
-        return false
     }
 
     private fun validaLance(lance: Lance) {
         val valorDoLance = lance.valor
-        if (lanceMenorQueUltimoLance(valorDoLance)) throw LanceMenorQueUltimoException()
-        val temLances = !lances.isEmpty()
-        if (temLances) {
-            if (usuarioIgualUltimoUsuario(lance)) throw UsuarioIgualUltimoLanceException()
-            if (usuarioTemCincoLances(lance)) throw UsuarioTemCincoLancesException()
+        if (lanceMenorQueUltimoLance(valorDoLance))
+            throw LanceMenorQueUltimoException()
+        if (temLances()) {
+            val usuarioNovo = lance.usuario
+            if (usuarioIgualUltimoUsuario(usuarioNovo))
+                throw UsuarioIgualUltimoLanceException()
+            if (usuarioTemCincoLances(lance))
+                throw UsuarioTemCincoLancesException()
         }
+    }
+
+    private fun temLances(): Boolean {
+        return !lances.isEmpty()
     }
 
     private fun usuarioTemCincoLances(lance: Lance): Boolean {
@@ -57,36 +78,14 @@ class Leilao(val descricao: String) : Serializable {
         return false
     }
 
-    private fun usuarioIgualUltimoUsuario(lance: Lance): Boolean {
-        if (lance.usuario.equals(lances[0].usuario)) {
-            return true
-        }
-        return false
+    private fun usuarioIgualUltimoUsuario(novoUsuario: Usuario): Boolean {
+        val ultimoUsuario = lances[0].usuario
+        return ultimoUsuario.equals(novoUsuario)
     }
 
     private fun lanceMenorQueUltimoLance(valorDoLance: Double): Boolean {
-        if (maiorLance > valorDoLance)
-            return true
-        return false
+        return maiorLance > valorDoLance
     }
 
-    private fun calculaMenorLance(valorDoLance: Double) {
-        if (valorDoLance < menorLance)
-            menorLance = valorDoLance
-    }
-
-    private fun calculaMaiorLance(valorDoLance: Double) {
-        if (valorDoLance > maiorLance)
-            maiorLance = valorDoLance
-    }
-
-    fun tresMaioresLances(): List<Lance> {
-        val tamanhoMaximo = if (lances.size > 3) {
-            3
-        } else {
-            lances.size
-        }
-        return lances.subList(0, tamanhoMaximo)
-    }
 
 }

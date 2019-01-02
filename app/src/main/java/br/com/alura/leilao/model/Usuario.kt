@@ -2,7 +2,9 @@ package br.com.alura.leilao.model
 
 import java.io.Serializable
 
-class Usuario(private val nome: String) : Serializable {
+class Usuario(val nome: String, private val id: Long = 0L) : Serializable {
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

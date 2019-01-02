@@ -12,8 +12,10 @@ import br.com.alura.leilao.extensions.formataParaDinheiro
 import br.com.alura.leilao.model.Leilao
 import kotlinx.android.synthetic.main.item_leilao.view.*
 
-class ListaLeilaoAdapter(private val context: Context, private val leiloes: List<Leilao>) : RecyclerView.Adapter<ListaLeilaoAdapter.ViewHolder>() {
+class ListaLeilaoAdapter(private val context: Context) : RecyclerView.Adapter<ListaLeilaoAdapter.ViewHolder>() {
+
     private var onItemClickListener: OnItemClickListener? = null
+    private val leiloes: ArrayList<Leilao> = arrayListOf()
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
@@ -31,6 +33,12 @@ class ListaLeilaoAdapter(private val context: Context, private val leiloes: List
 
     override fun getItemCount(): Int {
         return leiloes.size
+    }
+
+    fun atualiza(leiloes: List<Leilao>) {
+        this.leiloes.clear()
+        this.leiloes.addAll(leiloes)
+        notifyDataSetChanged()
     }
 
    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

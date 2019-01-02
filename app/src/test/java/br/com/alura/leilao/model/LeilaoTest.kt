@@ -4,11 +4,8 @@ import br.com.alura.leilao.builders.LeilaoBuilder
 import br.com.alura.leilao.exceptions.LanceMenorQueUltimoException
 import br.com.alura.leilao.exceptions.UsuarioIgualUltimoLanceException
 import br.com.alura.leilao.exceptions.UsuarioTemCincoLancesException
-import br.com.alura.leilao.utils.Const
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
-import java.lang.RuntimeException
 
 class LeilaoTest {
     private val leilao = Leilao("Console");
@@ -62,7 +59,7 @@ class LeilaoTest {
         leilao.propoe(Lance(Usuario("Teste2"), 300.0))
         leilao.propoe(Lance(usuarioTeste1, 400.0))
 
-        val maioresLances : List<Lance> = leilao.tresMaioresLances()
+        val maioresLances : List<Lance> = leilao.tresMaioresLances
 
         assertEquals(3, maioresLances.size)
         assertEquals(400.0, maioresLances[0].valor, DELTA)
@@ -72,7 +69,7 @@ class LeilaoTest {
 
     @Test
     fun When_RecebeNenhumLance_Expect_TresMaioresLances(){
-        val tresMaioresLances = leilao.tresMaioresLances()
+        val tresMaioresLances = leilao.tresMaioresLances
         assertEquals(0, tresMaioresLances.size)
     }
 
@@ -80,7 +77,7 @@ class LeilaoTest {
     fun When_RecebeUmLance_Expect_TresMaioresLances(){
         leilao.propoe(Lance(usuarioTeste1, 200.0))
 
-        val tresMaioresLances = leilao.tresMaioresLances()
+        val tresMaioresLances = leilao.tresMaioresLances
         assertEquals(1,tresMaioresLances.size)
         assertEquals(200.0, tresMaioresLances[0].valor, DELTA)
 
@@ -91,7 +88,7 @@ class LeilaoTest {
         leilao.propoe(Lance(Usuario("Teste2"), 100.0))
         leilao.propoe(Lance(usuarioTeste1, 200.0))
 
-        val tresMaioresLances = leilao.tresMaioresLances()
+        val tresMaioresLances = leilao.tresMaioresLances
 
         assertEquals(2, tresMaioresLances.size)
         assertEquals(200.0, tresMaioresLances[0].valor, DELTA)
@@ -107,7 +104,7 @@ class LeilaoTest {
         leilao.propoe(Lance(usuarioTeste1, 500.0))
         leilao.propoe(Lance(usuarioTeste2, 600.0))
 
-        val tresMaioresLances = leilao.tresMaioresLances()
+        val tresMaioresLances = leilao.tresMaioresLances
 
         assertEquals(3, tresMaioresLances.size)
         assertEquals(600.0, tresMaioresLances[0].valor, DELTA)
@@ -116,7 +113,7 @@ class LeilaoTest {
 
         leilao.propoe(Lance(usuarioTeste1, 700.0))
 
-        val tresMaioresLancesNovo = leilao.tresMaioresLances()
+        val tresMaioresLancesNovo = leilao.tresMaioresLances
 
         assertEquals(3, tresMaioresLancesNovo.size)
         assertEquals(700.0, tresMaioresLancesNovo[0].valor, DELTA)
