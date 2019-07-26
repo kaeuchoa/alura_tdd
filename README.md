@@ -3,7 +3,7 @@ Alura - Curso Testes para Android
 Código desenvolvido com base nas aulas dos cursos da plataforma de ensino online "Alura": 
 <ul>
   <li> <strong> Android parte 1: Testes automatizados e TDD </strong> - Concluído </li>
-  <li> <strong> Android parte 2: Boas práticas e novos cenários de teste </strong> - Em Andamento </li>
+  <li> <strong> Android parte 2: Boas práticas e novos cenários de teste </strong> - Concluído </li>
 </ul>
 
 Dentro deste projeto foram abordados os seguintes tópicos:    
@@ -18,6 +18,16 @@ Dentro deste projeto foram abordados os seguintes tópicos:
       <li>Implementando features com TDD</li>
       <li>Cobrindo mais casos de uso</li>
   </ol>
+  </li>
+  <li>
+    Android parte 2: Boas práticas e novos cenários de testes :
+    <ol>
+      <li>Analisando e removendo testes desnecessários</li>
+      <li>Finalizando os testes das features excepcionais</li>
+      <li>Esperando exceptions nos testes</li>
+      <li>Refatoração e alternativas para testar exceptions</li>
+      <li>Utilizando o hamcrest em testes</li>
+    </ol>
   </li>
 </ul>
 
